@@ -1,19 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app-deployment
+  name: nginx-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: my-app
+      app: nginx
   template:
     metadata:
       labels:
-        app: my-app
+        app: nginx
     spec:
+      initContainers:
+      - name: set-permissions
+        image: alpine
+        command: ["sh", "-c", "chown -R $UID:$GID /var/cache/nginx/client_temp"]
+        securityContext:
+          runAsUser: 0  # Optional: Run the init container as root
+        volumeMounts:
+        - mountPath: /var/cache/nginx
+          name: nginx-persistent-storage
       containers:
-      - name: my-app-container
-        image: nginx:latest
-        ports:
-        - containerPort: 80
+      - name: nginx
+        image: nginx
+        # Your Nginx container spec
+      volumes:
+      - name: nginx-persistent-storage
+        emptyDir: {}
