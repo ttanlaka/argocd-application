@@ -14,3 +14,4 @@ spec:
     path: kustomize-guestbook/
     repoURL: 'https://github.com/Chandu218/argocd-applications'
     targetRevision: feature/argocd-apps
+
