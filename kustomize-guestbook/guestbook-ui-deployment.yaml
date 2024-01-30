@@ -13,6 +13,6 @@ spec:
         app: my-app
     spec:
       containers:
-      - name: my-app-contain
+      - name: my-app-container
         image: busybox:latest # Replace with your container image
         command: ["sleep", "3600"]  # Replace with your application's startup command if needed
